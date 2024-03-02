@@ -15,7 +15,7 @@ import {SendMessage} from './sendmsg.js';
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
-const POT_ID = process.env.POT_ID;
+const CHANNEL_ID = process.env.CHANNEL_ID;
 // Parse request body and verifies incoming requests using discord-interactions package
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 
@@ -23,7 +23,7 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 const activeGames = {};
 
 app.get('/health', (req, res) => {
-  res.send(SendMessage(POT_ID, 'hello'));
+  res.send(SendMessage(CHANNEL_ID, 'hello'));
 });
 
 /**

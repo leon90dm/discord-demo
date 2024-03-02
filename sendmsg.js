@@ -1,9 +1,9 @@
 import axios from 'axios'; //
 
-const botToken = process.env.DISCORD_TOKEN; // Replace with your Discord bot token
+const botToken = process.env.CDP_TOKEN; // Replace with your Discord bot token
 
 // Function to send a message to the Discord bot
-async function SendMessage(channelId, message) {
+export async function SendMessage(channelId, message) {
   try {
     // Make an HTTP POST request to the Discord bot API
     const response = await axios.post(`https://discord.com/api/channels/${channelId}/messages`, {
