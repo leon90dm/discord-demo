@@ -125,7 +125,7 @@ export async function SendMessage(channelId, message) {
     const messageId = response.data.id;
     console.log('messageId:', messageId);
 
-    const responseUrl = `https://discord.com/api/channels/${channelId}/messages?after=${messageId}&limit=5`;
+    const responseUrl = `https://discord.com/api/channels/${channelId}/messages?after=${messageId}`;
     let botResponse;
     while (true) {
       botResponse = await axios.get(responseUrl, {

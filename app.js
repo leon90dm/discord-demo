@@ -24,7 +24,9 @@ const activeGames = {};
 const POT_ID = process.env.POT_ID
 
 app.get('/chat', async (req, res) => {
-  res.send(await SendMessage(CHANNEL_ID, `<@${POT_ID}> hello`));
+  const msg = req.query.msg
+  console.log('query msg:'+msg)
+  res.send(await SendMessage(CHANNEL_ID, `<@${POT_ID}> ${msg}`));
 });
 
 /**
