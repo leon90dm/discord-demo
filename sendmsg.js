@@ -127,7 +127,7 @@ export async function SendMessage(channelId, message) {
 
     const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages?after=${messageId}`;
     let botResponse;
-    let i = 5;
+    let i = 20;
     while (i-- > 0) {
       botResponse = await axios.get(responseUrl, {
         headers: {
@@ -136,11 +136,12 @@ export async function SendMessage(channelId, message) {
       });
       for (const message of botResponse.data) {
         if (message.referenced_message && message.referenced_message.id === messageId) {
-          console.log('message response:',JSON.stringify(message.content, null, 2));
+          console.log('message response:',JSON.stringify(message, null, 2));
         }
       }
       await new Promise(resolve => setTimeout(resolve, 3000));
     }
+    console.log("end-----")
   } catch (error) {
     console.error(error);
   }
