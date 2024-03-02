@@ -112,7 +112,7 @@ export async function SendMessage(channelId, message) {
   try {
     // Make an HTTP POST request to the Discord bot API  
 // https://discord.com/api/v9/channels/1213079139125436478/messages
-    const response = await axios.post(`https://discord.com/api/channels/${channelId}/messages`, {
+    const response = await axios.post(`https://discord.com/api/v9/channels/${channelId}/messages`, {
       content: message,
     }, {
       headers: {
@@ -125,22 +125,21 @@ export async function SendMessage(channelId, message) {
     const messageId = response.data.id;
     console.log('messageId:', messageId);
 
-    const responseUrl = `https://discord.com/api/channels/${channelId}/messages?after=${messageId}`;
+    const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages?after=${messageId}`;
     let botResponse;
-    while (true) {
+    let i = 5;
+    while (i-- > 0) {
       botResponse = await axios.get(responseUrl, {
         headers: {
           'Authorization': 'Bot ' + botToken,
         },
       });
-    //   console.log(JSON.stringify(botResponse.data, null, 2));
       for (const message of botResponse.data) {
-        if (message.type === 19 && message.referenced_message && message.referenced_message.id === messageId) {
-          console.log('message response:', message.content);
-          return message.content;
+        if (message.referenced_message && message.referenced_message.id === messageId) {
+          console.log('message response:',JSON.stringify(message.content, null, 2));
         }
       }
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
     }
   } catch (error) {
     console.error(error);
