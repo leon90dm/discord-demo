@@ -19,8 +19,8 @@ export async function SendMessage(channelId, message) {
 
     // Wait for the bot's response 
     const messageId = response.data.id;
-    console.log('messageid:' +messageId)
-    const responseUrl = `https://discord.com/api/channels/${channelId}/messages/${messageId}`;
+    console.log('response:', JSON.stringify(response.data, null, 2));
+    const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages/${messageId}`;
     const botResponse = await axios.get(responseUrl, {
       headers: {
         'Authorization': 'Bot ' + botToken,
