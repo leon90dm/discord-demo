@@ -35,7 +35,7 @@ app.post('/interactions', async function (req, res) {
   }
 
   /**
-   * Handle slash command requests
+   * Handle slash command requests  1=="1"  1==="1"
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
   if (type === InteractionType.APPLICATION_COMMAND) {
