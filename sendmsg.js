@@ -1,8 +1,8 @@
-const axios = require('axios');
+import axios from 'axios'; //
 
-const botToken = process.env.; // Replace with your Discord bot token
+const botToken = process.env.DISCORD_TOKEN; // Replace with your Discord bot token
 
-const sendMessage = async (recipientId, content) => {
+export const SendMessage = async (recipientId, content) => {
   try {
     // Send a message to the bot
     const response = await axios.post(
@@ -37,6 +37,7 @@ const sendMessage = async (recipientId, content) => {
     // Wait for the bot's response (optional)
     const responseMessage = await waitForBotResponse(channelId);
     console.log('Bot response:', responseMessage);
+    return responseMessage;
   } catch (error) {
     console.error('Error sending message:', error);
   }
@@ -69,6 +70,3 @@ const waitForBotResponse = async (channelId) => {
     console.error('Error waiting for bot response:', error);
   }
 };
-
-// Usage example
-sendMessage('RECIPIENT_USER_ID', 'Hello bot!');
