@@ -23,7 +23,10 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 const activeGames = {};
 
 app.get('/health', (req, res) => {
-  res.send(SendMessage(POT_ID, 'hello'));
+  // res.send(SendMessage(POT_ID, 'hello'));
+  res.send(
+  DiscordRequest(POT_ID, {cotent: 'hello'})
+  );
 });
 
 /**
