@@ -133,14 +133,14 @@ export async function SendMessage(channelId, message) {
           'Authorization': 'Bot ' + botToken,
         },
       });
-      console.log(JSON.stringify(botResponse.data, null, 2));
+    //   console.log(JSON.stringify(botResponse.data, null, 2));
       for (const message of botResponse.data) {
-        if (message.referenced_message && message.referenced_message.id === messageId) {
+        if (message.type === 19 && message.referenced_message && message.referenced_message.id === messageId) {
           console.log('message response:', message.content);
           return message.content;
         }
       }
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
   } catch (error) {
     console.error(error);
