@@ -23,8 +23,8 @@ app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 const activeGames = {};
 const POT_ID = process.env.POT_ID
 
-app.get('/health', (req, res) => {
-  res.send(SendMessage(CHANNEL_ID, `<@${POT_ID}> hello`));
+app.get('/chat', async (req, res) => {
+  res.send(await SendMessage(CHANNEL_ID, `<@${POT_ID}> hello`));
 });
 
 /**
