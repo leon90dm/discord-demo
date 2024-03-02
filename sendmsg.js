@@ -26,6 +26,7 @@ export async function SendMessage(channelId, message) {
 
     // Log the bot's response
     console.log(botResponse.data.content);
+    return botResponse.data.content
   } catch (error) {
     console.error(error);
   }
