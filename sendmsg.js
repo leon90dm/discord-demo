@@ -19,8 +19,9 @@ export async function SendMessage(channelId, message) {
 
     // Wait for the bot's response 
     const messageId = response.data.id;
-    console.log('response:', JSON.stringify(response.data, null, 2));
-    const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages/${messageId}`;
+    console.log('messageId:', messageId);
+    // await new Promise(resolve => setTimeout(resolve, 5000));
+    const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages?after=${messageId}`;
     const botResponse = await axios.get(responseUrl, {
       headers: {
         'Authorization': 'Bot ' + botToken,
@@ -28,8 +29,9 @@ export async function SendMessage(channelId, message) {
     });
 
     // Log the bot's response
-    console.log(botResponse.data.content);
-    return botResponse.data.content
+    console.log(JSON.stringify(botResponse.data,null,2));
+    console.log(botResponse.data);
+    return botResponse.data
   } catch (error) {
     console.error(error);
   }
