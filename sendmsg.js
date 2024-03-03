@@ -125,19 +125,16 @@ export async function SendMessage(channelId, message) {
         const messageId = response.data.id;
         console.log('messageId:', messageId);
 
-
         let botResponse;
-        let currentMessageId = messageId;
         let i = 20;
         while (i-- > 0) {
-            const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages?after=${currentMessageId}`;
+            const responseUrl = `https://discord.com/api/v9/channels/${channelId}/messages?after=${messageId}`;
             botResponse = await axios.get(responseUrl, {
                 headers: {
                     'Authorization': 'Bot ' + botToken,
                 },
             });
             for (const message of botResponse.data) {
-                currentMessageId = message.id;
                 if (message.referenced_message && message.referenced_message.id === messageId) {
                     if (message.components && message.components.length > 0) {
                         return message.content;
