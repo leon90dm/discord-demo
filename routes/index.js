@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-import {SendMessage} from './sendmsg.js';
+const {SendMessage} =require('./sendmsg.js');
 const CHANNEL_ID = process.env.CHANNEL_ID;
 const POT_ID = process.env.POT_ID
 
