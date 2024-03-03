@@ -1,4 +1,4 @@
-import axios from 'axios'; 
+var axios = require('axios'); 
 
 const botToken = process.env.CDP_TOKEN; // Replace with your Discord bot token
 const SEND_TOKEN = process.env.SEND_TOKEN;
