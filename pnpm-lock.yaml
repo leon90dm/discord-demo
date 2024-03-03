@@ -26,6 +26,9 @@ dependencies:
   morgan:
     specifier: ~1.9.1
     version: 1.9.1
+  axios:
+    specifier: ^0.28.0
+    version: 0.28.0
 
 packages:
 
