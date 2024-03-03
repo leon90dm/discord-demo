@@ -10,10 +10,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/chat', async (req, res) => {
+router.get('/chat', async function (req, res, next) {
   const msg = req.query.msg
   console.log('query msg:'+msg)
-  res.send(await SendMessage(CHANNEL_ID, `<@${POT_ID}> ${msg}`));
+  var resMsg = await SendMessage(CHANNEL_ID, `<@${POT_ID}> ${msg}`);
+  res.render('chat', { title: 'Chat', msg: resMsg });
 });
 
 module.exports = router;
