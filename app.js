@@ -10,6 +10,7 @@ import {
 import { VerifyDiscordRequest, getRandomEmoji, DiscordRequest } from './utils.js';
 import { getShuffledOptions, getResult } from './game.js';
 import {SendMessage} from './sendmsg.js';
+import indexRouter from './routes/index.js';
 
 // Create an express app
 const app = express();
@@ -31,6 +32,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.use('/', indexRouter);
 // Parse request body and verifies incoming requests using discord-interactions package
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 
