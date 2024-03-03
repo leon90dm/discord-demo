@@ -4,7 +4,7 @@ const botToken = process.env.CDP_TOKEN; // Replace with your Discord bot token
 const SEND_TOKEN = process.env.SEND_TOKEN;
 
 // Function to send a message to the Discord bot
-export async function SendMessage(channelId, message) {
+async function SendMessage(channelId, message) {
     try {
         // Make an HTTP POST request to the Discord bot API  
         // https://discord.com/api/v9/channels/1213079139125436478/messages
