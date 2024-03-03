@@ -26,6 +26,8 @@ app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  //log req with json
+  console.log(JSON.stringify(req.body, null, 2));
   next(createError(404));
 });
 
