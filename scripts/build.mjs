@@ -24,6 +24,7 @@ function getModuleEntries() {
                 entries = entries.concat(getModuleEntriesRecursive(path))
             } else if (file.endsWith('.js')) {
                 entries.push(path)
+                console.log('added', path);
             }
         })
         return entries
@@ -34,8 +35,12 @@ function getModuleEntries() {
 async function listFiles(path){
     try {
         const files = await readdir(path, {withFileTypes: true, recursive: true});
-        for (const file of files)
+        for (const file of files){
+          if ('node_modules' in file.path){
+            continue;
+          }
           console.log(file);
+        }
       } catch (err) {
         console.error(err);
       }
