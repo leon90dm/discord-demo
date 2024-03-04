@@ -61,4 +61,8 @@ router.get('/', async function(req, res, next) {
   res.render('index', { title: 'Chat', msg: resMsg });
 });
 
+router.get('/users', function(req, res, next) {
+    res.send('respond with a resource');
+  });
+
 module.exports = router;
