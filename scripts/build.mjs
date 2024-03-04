@@ -88,7 +88,7 @@ staticFileDirs.forEach(dir => {
     copyIfDirExists(dir, `.zeabur/output/static`)
 })
 
-await listFiles(`.zeabur/output`)
+await listFiles(`.zeabur/output/functions/index.func`);
 
 function copyIfDirExists(src, dest) {
     if (statSync(src).isDirectory()) {
