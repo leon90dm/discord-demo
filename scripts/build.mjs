@@ -1,5 +1,6 @@
 import { build as _build } from 'esbuild';
 import { existsSync, rmSync, readdirSync, statSync, copyFileSync, cpSync, cp } from 'fs';
+import { readdir } from 'fs/promises';
 
 // dynamic-required files
 const dynamicRequiredDirs = ['views']
@@ -28,6 +29,16 @@ function getModuleEntries() {
         return entries
     }
     return getModuleEntriesRecursive('.')
+}
+
+async function listFiles(path){
+    try {
+        const files = await readdir(path, {withFileTypes: true, recursive: true});
+        for (const file of files)
+          console.log(file);
+      } catch (err) {
+        console.error(err);
+      }
 }
 
 // build with esbuild
@@ -76,6 +87,8 @@ dynamicRequiredDirs.forEach(dir => {
 staticFileDirs.forEach(dir => {
     copyIfDirExists(dir, `.zeabur/output/static`)
 })
+
+await listFiles(`.zeabur/output`)
 
 function copyIfDirExists(src, dest) {
     if (statSync(src).isDirectory()) {
