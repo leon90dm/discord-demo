@@ -1,5 +1,5 @@
-const esbuild = require('esbuild');
-const fs = require('fs');
+import { build as _build } from 'esbuild';
+import { existsSync, rmSync, readdirSync, statSync, copyFileSync, cpSync, cp } from 'fs';
 
 // dynamic-required files
 const dynamicRequiredDirs = ['views']
@@ -8,17 +8,17 @@ const dynamicRequiredDirs = ['views']
 const staticFileDirs = ['public']
 
 // Remove old output
-if (fs.existsSync('.zeabur/output')) {
+if (existsSync('.zeabur/output')) {
     console.info('Removing old .zeabur/output')
-    fs.rmSync('.zeabur/output', {recursive: true})
+    rmSync('.zeabur/output', {recursive: true})
 }
 
 function getModuleEntries() {
     function getModuleEntriesRecursive(dir) {
         let entries = []
-        fs.readdirSync(dir).forEach(file => {
+        readdirSync(dir).forEach(file => {
             const path = `${dir}/${file}`
-            if (fs.statSync(path).isDirectory()) {
+            if (statSync(path).isDirectory()) {
                 if(file === 'node_modules') return
                 entries = entries.concat(getModuleEntriesRecursive(path))
             } else if (file.endsWith('.js')) {
@@ -32,7 +32,7 @@ function getModuleEntries() {
 
 // build with esbuild
 try {
-    esbuild.build({
+    _build({
         entryPoints: getModuleEntries(),
         bundle: false,
         minify: false,
@@ -52,8 +52,8 @@ try {
             process.exit(1)
         }
         console.info('Successfully built app.js into .zeabur/output/functions/index.func')
-        fs.copyFileSync('.zeabur/output/functions/index.func/app.js', '.zeabur/output/functions/index.func/index.js')
-        fs.rmSync('.zeabur/output/functions/index.func/app.js')
+        copyFileSync('.zeabur/output/functions/index.func/app.js', '.zeabur/output/functions/index.func/index.js')
+        rmSync('.zeabur/output/functions/index.func/app.js')
     })
 } catch (error) {
     console.error(error)
@@ -61,11 +61,11 @@ try {
 
 // copy node_modules into function output directory
 console.info('Copying node_modules into .zeabur/output/functions/index.func/node_modules')
-fs.cpSync('node_modules', '.zeabur/output/functions/index.func/node_modules', {recursive: true, verbatimSymlinks: true})
+cpSync('node_modules', '.zeabur/output/functions/index.func/node_modules', {recursive: true, verbatimSymlinks: true})
 
 // copy package.json into function output directory
 console.info('Copying package.json into .zeabur/output/functions/index.func')
-fs.cpSync('package.json', '.zeabur/output/functions/index.func/package.json')
+cpSync('package.json', '.zeabur/output/functions/index.func/package.json')
 
 // copy dynamic-required files into function output directory, so they can be required during runtime
 dynamicRequiredDirs.forEach(dir => {
@@ -78,9 +78,9 @@ staticFileDirs.forEach(dir => {
 })
 
 function copyIfDirExists(src, dest) {
-    if (fs.statSync(src).isDirectory()) {
+    if (statSync(src).isDirectory()) {
         console.info(`Copying ${src} to ${dest}`)
-        fs.cp(src, dest, {recursive: true}, (err) => {
+        cp(src, dest, {recursive: true}, (err) => {
             if (err) throw err;
         });
         return
