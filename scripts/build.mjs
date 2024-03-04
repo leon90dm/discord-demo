@@ -70,6 +70,8 @@ try {
         console.info('Successfully built app.js into .zeabur/output/functions/index.func')
         copyFileSync('.zeabur/output/functions/index.func/app.js', '.zeabur/output/functions/index.func/index.js')
         rmSync('.zeabur/output/functions/index.func/app.js')
+        copyFileSync('.zeabur/output/functions/index.func/routes/users.js', '.zeabur/output/functions/users/get.func/index.js')
+        rmSync('.zeabur/output/functions/index.func/routes/users.js')
     })
 } catch (error) {
     console.error(error)
